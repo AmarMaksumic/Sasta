@@ -1,0 +1,44 @@
+.linage {
+  fill: none;
+  stroke: #000;
+}
+.marriage {
+  fill: none;
+  stroke: black;
+}
+.Male {
+  background-color: lightblue;
+  color:black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+}
+.Female {
+  background-color: pink;
+  color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+}
+.tree_center {
+  border-color: green;
+  border-width: 3px;
+}
+.none {
+  background-color: gray;
+  color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+}
+.emphasis{
+  font-style: italic;
+}
+p {
+  padding:0;
+  margin:0;
+}
+svg {
+  border-style: solid;
+  border-width: 1px;
+}

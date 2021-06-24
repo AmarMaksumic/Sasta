@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VeZa | Topology</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.jpg" rel="icon">
+  <!-- <link href="img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Raleway:400,300,700,900" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/index.css" rel="stylesheet">
+
+  <!-- Specific Stylesheet File -->
+  <link href="css/topology.css" rel="stylesheet">
+  <link href="css/d3_tree.css" rel="stylesheet">
+  <link href="css/chosen.css" rel="stylesheet">
+
+  <!-- =======================================================
+    Template Name: Spot
+    Template URL: https://templatemag.com/spot-bootstrap-freelance-template/
+    Author: TemplateMag.com
+    License: https://templatemag.com/license/
+  ======================================================= -->
+</head>
+
+<body onload='load_page()'>
+
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top" id="navbar">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <a class="navbar-brand" href="index.html">VeZa</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="portal.html">Portal</a></li>
+          <li class="active"><a onclick="signout()">Log-out</a></li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </div>
+
+  <div class="container dg" id="topology">
+    <h2 id="active_tree">$Tree</h2>
+    <button id="edit_tree">Edit Family Tree</button>
+    <div class="flex-container">
+      <div class="flex-item-left" id="family_tree"></div>
+      <div class="flex-item-right">
+        <input class="reference_point" type="text" name="reference_point" placeholder="Search for a person or date!">
+        <div class="individual_list"></div>
+      </div>
+    </div>
+  </div>
+  <!-- container -->
+
+  <div class="modal" id="edit_tree_modal">
+    <div class="modal_content">
+      <div class="modal_header">
+        <span class="close">&times;</span>
+        <p><strong>Edit Family Tree</strong></p>
+      </div>
+      <div class="modal_body">
+        <div id="search_for_edit">
+          <input class="reference_point" type="text" name="reference_point" placeholder="Search for a person or date!">
+          <div class="individual_list"></div>
+        </div>
+        <div id="edit_individual">
+          <p id="current_individual"></p>
+          <form onsubmit="return false">
+            <label for="Fname">First Name: </label>
+            <input type="text" name="Fname" id="Fname">
+            <label for="Mname">Middle Name: </label>
+            <input type="text" name="Mname" id="Mname">
+            <label for="Lname">Last Name: </label>
+            <input type="text" name="Lname" id="Lname">
+            <label for="DOB">Date of Birth: </label>
+            <input type="date" name="DOB" id="DOB">
+            <label for="DOD">Date of Death: </label>
+            <input type="date" name="DOD" id="DOD">
+            <label for="Gender">Gender: </label><br>
+            <select name="Gender" id="Gender" multiple>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select><br><br>
+            <hr style="border-top: 3px dashed #bbb;">
+            <label for="Parents">Parents: </label><br>
+            <select name="Parents" id="Parents" class="dropsearch" multiple></select><br><br>
+            <label for="Siblings">Siblings: </label><br>
+            <select name="Siblings" id="Siblings" class="dropsearch" multiple></select><br><br>
+            <hr style="border-top: 3px dashed #bbb;">
+            <label for="Num_marriages">Number of Marriages: </label>
+            <input type="number" min="0" name="Num_marriages" id="Num_marriages">
+            <label for="Spouse_m1">Spouse for Marriage 1</label><br>
+            <select name="Spouse_m1" id="Spouse_m1" class="dropsearch" multiple></select><br><br>
+            <label for="Children_m1">Children for Marriage 1</label><br>
+            <select name="Children_m1" id="Children_m1" class="dropsearch" multiple></select><br><br>
+            <label for="Status_m1">Status for Marriage 1</label><br>
+            <select name="Status_m1" id="Status_m1" multiple>
+              <option value="1">Married</option>
+              <option value="2">Divorced</option>
+              <option value="3">Re-Married</option>
+            </select><br><br>
+            <div id="extra_m"></div>
+            <label for="Extra">Extra info: </label>
+            <input type="text" name="Extra" id="Extra">
+          </form>
+        </div>
+      </div>
+      <div class="modal_footer">
+        <button class="add_individual" id="add_individual">Add person</button>
+        <button class="close_modal" id="close_modal">Close</button>
+        <button class="save" id="submit_edit_individual">Save edit</button>
+        <button class="delete" id="delete_individual">Delete</button>
+        <button class="save" id="submit_add_individual">Save add</button>
+        <button class="cancel" id="cancel_action">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="f">
+    <div class="container">
+      <div class="row centered">
+        <a href="https://github.com/AmarMaksumic"><i class="fa fa-github"></i></a>
+      </div>
+      <!-- row -->
+    </div>
+    <!-- container -->
+  </div>
+  <!-- Footer -->
+
+  <div id="copyrights">
+    <div class="container">
+      <p>
+        &copy; Copyrights <strong>Spot</strong>. All Rights Reserved
+      </p>
+      <div class="credits">
+        <!--
+          You are NOT allowed to delete the credit link to TemplateMag with free version.
+          You can delete the credit link only if you bought the pro version.
+          Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/spot-bootstrap-freelance-template/
+          Licensing information: https://templatemag.com/license/
+        -->
+        Created with Spot template by <a href="https://templatemag.com/">TemplateMag</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="lib/php-mail-form/validate.js"></script>
+  <script src="lib/chart/chart.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@4"></script>
+  <script>
+
+  const div = d3.selectAll("div");
+
+  </script>
+  <script src="js/package/lodash.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-dtree@2.4.1/dist/dTree.min.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/server_updates.js"></script>
+  <script src="js/chosen.jquery.js"></script>
+  <script src="js/topology.js"></script>
+
+</body>
+</html>
