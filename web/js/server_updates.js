@@ -14,7 +14,7 @@ function is_logged_server() {
     console.log(request.responseText)
     if (request.responseText == 'False') {
       localStorage.clear();
-      window.location = '/web/login.html';
+      window.location = 'login.html';
     }
   };
 
@@ -35,11 +35,11 @@ function signout() {
   request.send(JSON.stringify({'username': localStorage.getItem('user')})); // create FormData from form that triggered event
   event.preventDefault();
   localStorage.clear();
-  window.location = '/web/login.html';
+  window.location = 'login.html';
 }
 
 function request_tree(tree) {
-  if (!login_status()) window.location = '/web/login.html';
+  if (!login_status()) window.location = 'login.html';
   
   var url = "https://VeZa-Server.amarmaks.repl.co/request_tree";
   var request = new XMLHttpRequest();
@@ -49,7 +49,7 @@ function request_tree(tree) {
     if (request.responseText != 'denied') {
       localStorage.setItem('current_tree_data', request.responseText);
       localStorage.setItem('current_tree', tree);
-      window.location = '/web/topology.html';
+      window.location = 'topology.html';
     }
     console.log(request.responseText);
   };

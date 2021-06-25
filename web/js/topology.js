@@ -1,7 +1,7 @@
 let total_num_marriages = null;
 
 function load_page() {
-  if (!login_status()) window.location = '/web/login.html';
+  if (!login_status()) window.location = 'login.html';
 
   if (localStorage.getItem('current_individual') != 'no_curr') make_tree(localStorage.getItem('current_individual'));
 
@@ -116,7 +116,7 @@ function make_tree(id) {
   current_individual = id;
   localStorage.setItem('current_individual', current_individual);
   document.getElementById('family_tree').innerHTML = '';
-  if (!login_status()) window.location = '/web/login.html';
+  if (!login_status()) window.location = 'login.html';
 
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
   let tree = [];

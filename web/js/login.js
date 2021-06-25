@@ -12,7 +12,7 @@ function formSubmit(event) {
     localStorage.setItem('trees', user_uuid['trees']);
     localStorage.setItem('uuid', user_uuid['uuid']);
     localStorage.setItem('logged_in', true);
-    window.location = '/web/portal.html';
+    window.location = 'portal.html';
   };
 
   request.onerror = function() {
@@ -28,7 +28,7 @@ function attachFormSubmitEvent(formId){
 }
 
 function load_page() {
-  if (login_status()) window.location = '/web/portal.html';
+  if (login_status()) window.location = 'portal.html';
 }
 
 attachFormSubmitEvent("login");
