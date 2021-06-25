@@ -645,7 +645,7 @@ function collect_add_data() {
 
 function send_add_data() {
   request_add(collect_add_data());
-  //request_tree(localStorage.getItem('current_tree'));
+  request_tree(localStorage.getItem('current_tree'));
 }
 
 function collect_edit_data(id) {
