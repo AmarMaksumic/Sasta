@@ -62,6 +62,7 @@
   <div class="container dg" id="topology">
     <h2 id="active_tree">$Tree</h2>
     <button id="edit_tree">Edit Family Tree</button>
+    <button id="sharing_settings">Sharing Settings</button>
     <div class="flex-container">
       <div class="flex-item-left" id="family_tree"></div>
       <div class="flex-item-right">
@@ -127,11 +128,26 @@
       </div>
       <div class="modal_footer">
         <button class="add_individual" id="add_individual">Add person</button>
-        <button class="close_modal" id="close_modal">Close</button>
+        <button class="close_modal" id="close_edit_modal">Close</button>
         <button class="save" id="submit_edit_individual">Save edit</button>
         <button class="delete" id="delete_individual">Delete</button>
         <button class="save" id="submit_add_individual">Save add</button>
         <button class="cancel" id="cancel_action">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="sharing_modal">
+    <div class="modal_content">
+      <div class="modal_header">
+        <span class="close">&times;</span>
+        <p><strong>Sharing Settings</strong></p>
+      </div>
+      <div class="modal_body">
+        <p>hi</p>
+      </div>
+      <div class="modal_footer">
+        <button class="close_modal" id="close_settings_modal">Close</button>
       </div>
     </div>
   </div>
@@ -183,6 +199,9 @@
   <!-- Template Main Javascript File -->
   <script src="js/server_updates.js"></script>
   <script src="js/chosen.jquery.js"></script>
+  <script src="js/edit_tree_modal.js"></script>
+  <script src="js/sharing_modal.js"></script>
+  <script src="js/individual_table.js"></script>
   <script src="js/topology.js"></script>
 
 </body>
