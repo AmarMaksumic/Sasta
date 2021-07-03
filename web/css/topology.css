@@ -134,7 +134,7 @@ button:hover {
 
 .modal_content {
   position: relative;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 8% auto; /* 8% from the top and centered */
   background-color: #fefefe;
   padding: 0;
   border: 1px solid #888;
