@@ -430,13 +430,18 @@ function send_edit_data(id) {
 }
 
 function edit_individual(id) {
-  document.getElementById('submit_edit_individual').style.display = 'inline-block';
-  document.getElementById('cancel_action').style.display = 'inline-block';
-  document.getElementById('delete_individual').style.display = 'inline-block';
-  document.getElementById('submit_add_individual').style.display = 'none';
-  document.getElementById('add_individual').style.display = 'none';
-  document.getElementById('close_edit_modal').style.display = 'none';
-  console.log(id)
+  if (localStorage.getItem('view_only') == 'false') {
+    document.getElementById('submit_edit_individual').style.display = 'inline-block';
+    document.getElementById('cancel_action').style.display = 'inline-block';
+    document.getElementById('delete_individual').style.display = 'inline-block';
+    document.getElementById('submit_add_individual').style.display = 'none';
+    document.getElementById('add_individual').style.display = 'none';
+    document.getElementById('close_edit_modal').style.display = 'none';
+
+    document.getElementById('submit_edit_individual').onclick = function() {
+      send_edit_data(id);
+    }
+  }
   document.getElementById('search_for_edit').style.display = 'none';
   document.getElementById('edit_individual').style.display = 'block';
 
@@ -450,19 +455,17 @@ function edit_individual(id) {
     console.log('done')
   })
 
-  document.getElementById('submit_edit_individual').onclick = function() {
-    send_edit_data(id);
-  }
-
 }
 
 function add_individual() {
-  document.getElementById('submit_edit_individual').style.display = 'none';
-  document.getElementById('cancel_action').style.display = 'inline-block';
-  document.getElementById('submit_add_individual').style.display = 'inline-block';
-  document.getElementById('delete_individual').style.display = 'none';
-  document.getElementById('add_individual').style.display = 'none';
-  document.getElementById('close_modal').style.display = 'none';
+  if (localStorage.getItem('view_only') == 'false') {
+    document.getElementById('submit_edit_individual').style.display = 'none';
+    document.getElementById('cancel_action').style.display = 'inline-block';
+    document.getElementById('submit_add_individual').style.display = 'inline-block';
+    document.getElementById('delete_individual').style.display = 'none';
+    document.getElementById('add_individual').style.display = 'none';
+    document.getElementById('close_edit_modal').style.display = 'none';
+  }
   document.getElementById('search_for_edit').style.display = 'none';
   document.getElementById('edit_individual').style.display = 'block';
 

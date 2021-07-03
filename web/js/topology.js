@@ -1,7 +1,9 @@
 let total_num_marriages = null;
 
 function load_page() {
-  if (!login_status()) window.location = 'login.html';
+  if (localStorage.getItem('view_only') == 'false') {
+    if (!login_status()) window.location = 'login.html';
+  }
 
   if (localStorage.getItem('current_individual') != 'no_curr') make_tree(localStorage.getItem('current_individual'));
 
@@ -11,17 +13,29 @@ function load_page() {
   render_table('EDIT')
 
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
-  let individuals = tree_data.individuals[0];
 
   init_edit_modal();
   init_share_modal();
+
+  if(localStorage.getItem('view_only') == 'true') {
+    console.log('hi')
+    document.getElementById('sharing_settings').remove();
+    document.getElementById('edit_tree').remove();
+    document.getElementById('edit_family_tree_title').innerHTML = 'View Family Tree';
+
+    for (let i = 0; i < document.getElementsByClassName('not_for_viewer').length; i) {
+      document.getElementsByClassName('not_for_viewer')[i].remove();
+    }
+  }
 }
 
 function make_tree(id) {
   current_individual = id;
   localStorage.setItem('current_individual', current_individual);
   document.getElementById('family_tree').innerHTML = '';
-  if (!login_status()) window.location = 'login.html';
+  if (localStorage.getItem('view_only') == false) {
+    if (!login_status()) window.location = 'login.html';
+  }
 
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
   let tree = [];

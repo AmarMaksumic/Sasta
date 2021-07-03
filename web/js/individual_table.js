@@ -8,7 +8,7 @@ function render_table (job) {
   tree_table.setAttribute('class', 'individuals_table');
 
   for (id in tree_data.individuals[0]) {
-    addRow(tree_table, tree_data.individuals[0][id].Fname + ' ' + tree_data.individuals[0][id].Lname, tree_data.individuals[0][id].DOB, id, location)
+    add_row(tree_table, tree_data.individuals[0][id].Fname + ' ' + tree_data.individuals[0][id].Lname, tree_data.individuals[0][id].DOB, id, location)
   }
 
   console.log(tree_table);
@@ -16,7 +16,7 @@ function render_table (job) {
   document.getElementsByClassName('individual_list')[location].appendChild(tree_table);
 }
 
-function addCell(tr, value) {
+function add_cell(tr, value) {
   let td = document.createElement('td');
   
   td.innerHTML = value;
@@ -26,12 +26,12 @@ function addCell(tr, value) {
   delete td;
 }
 
-function addRow(table, name, dob, id, location) {
+function add_row(table, name, dob, id, location) {
   let tr = document.createElement('tr');
 
-  addCell(tr, name);
+  add_cell(tr, name);
   if (dob == '') dob= 'n/a';
-  addCell(tr, dob);
+  add_cell(tr, dob);
  
   if (location == 0) tr.onclick = function() {make_tree(id)};
   if (location == 1) tr.onclick = function() {edit_individual(id)};
