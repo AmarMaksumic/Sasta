@@ -1,3 +1,5 @@
+var total_num_marriages = 0;
+
 function init_edit_modal() {
   var modal = document.getElementById("edit_tree_modal");
 
@@ -170,7 +172,7 @@ function populate_fields(id) {
     $('#Status_m1').val([]);
     $('#Status_m1').trigger('chosen:updated');
 
-    total_num_marriages = 0;
+    window.total_num_marriages = 0;
 
     document.getElementById('Spouse_m1').disabled = true; 
     $('#Spouse_m1').prop('disabled', true).trigger("chosen:updated");
@@ -190,11 +192,11 @@ function populate_fields(id) {
     $('#Spouse_m1').prop('disabled', false).trigger("chosen:updated");
     document.getElementById('Status_m1').disabled = false; 
     $('#Status_m1').prop('disabled', false).trigger("chosen:updated");
-    total_num_marriages = 1;
+    window.total_num_marriages = 1;
   } else {
-    total_num_marriages = 0;
+    window.total_num_marriages = 0;
     new_marriage_drop(individuals[id].Num_marriages);
-    total_num_marriages = individuals[id].Num_marriages;
+    window.total_num_marriages = individuals[id].Num_marriages;
 
     for (let i = 1; i <= individuals[id].Num_marriages; i++) {
       $('#Spouse_m' + i).val([individuals[id].Spouse[i - 1]]);
@@ -257,14 +259,14 @@ function new_marriage_drop(new_num) {
     $('#Spouse_m1').prop('disabled', false).trigger("chosen:updated");
     document.getElementById('Status_m1').disabled = false; 
     $('#Status_m1').prop('disabled', false).trigger("chosen:updated");
-  } else if (total_num_marriages == 0 && new_num > 1) {
-    total_num_marriages+=2;
+  } else if (window.total_num_marriages == 0 && new_num > 1) {
+    window.total_num_marriages+=2;
     document.getElementById('Spouse_m1').disabled = false; 
     $('#Spouse_m1').prop('disabled', false).trigger("chosen:updated");
     document.getElementById('Status_m1').disabled = false; 
     $('#Status_m1').prop('disabled', false).trigger("chosen:updated");
     let marriage_container = document.getElementById('extra_m');
-    for (let i = total_num_marriages; i <= new_num; i++) {
+    for (let i = window.total_num_marriages; i <= new_num; i++) {
       console.log(i)
       let marriage = `  <div id=m` + i + `>
                           <hr style="border-top: 1px dashed #bbb;">
@@ -283,13 +285,13 @@ function new_marriage_drop(new_num) {
       marriage_container.innerHTML += marriage;
     }
 
-    for (let i = total_num_marriages; i <= new_num; i++) {
+    for (let i = window.total_num_marriages; i <= new_num; i++) {
       init_marriage_drop(i);
     }
   } else {
-    total_num_marriages+=1;
+    window.total_num_marriages+=1;
     let marriage_container = document.getElementById('extra_m');
-    for (let i = total_num_marriages; i <= new_num; i++) {
+    for (let i = window.total_num_marriages; i <= new_num; i++) {
       console.log(i)
       let marriage = `  <div id=m` + i + `>
                           <hr style="border-top: 1px dashed #bbb;">
@@ -308,7 +310,7 @@ function new_marriage_drop(new_num) {
       marriage_container.innerHTML += marriage;
     }
 
-    for (let i = total_num_marriages; i <= new_num; i++) {
+    for (let i = window.total_num_marriages; i <= new_num; i++) {
       init_marriage_drop(i);
     }
   }
@@ -330,7 +332,7 @@ function del_marriage_drop(new_num, should_del_all) {
     $('#Status_m1').val([]);
     $('#Status_m1').trigger('chosen:updated');
 
-    total_num_marriages = 0;
+    window.total_num_marriages = 0;
 
     document.getElementById('Spouse_m1').disabled = true; 
     $('#Spouse_m1').prop('disabled', true).trigger("chosen:updated");
@@ -339,7 +341,7 @@ function del_marriage_drop(new_num, should_del_all) {
   } else if (new_num == 1) {
     document.getElementById('extra_m').innerHTML="";
   } else {
-    for (let i = total_num_marriages; i > new_num; i--) {
+    for (let i = window.total_num_marriages; i > new_num; i--) {
       document.getElementById('m' + i).remove();
     }
   }
@@ -365,12 +367,12 @@ function collect_add_data() {
     individual.Siblings.push($('#Siblings').val()[i]);
   }
 
-  individual.Num_marriages = total_num_marriages;
+  individual.Num_marriages = window.total_num_marriages;
   individual.Spouse = [];
   individual.Children = [];
   individual.Marriage_Status = [];
 
-  for (let i = 1; i <= total_num_marriages; i++) { 
+  for (let i = 1; i <= window.total_num_marriages; i++) { 
     individual.Spouse[i - 1] = $('#Spouse_m' + i).val()[0];
     individual.Children[i - 1] = $('#Children_m' + i).val();
     individual.Marriage_status[i - 1] = $('#Status_m' + i).val()[0];
@@ -409,12 +411,15 @@ function collect_edit_data(id) {
     individual.Siblings.push($('#Siblings').val()[i]);
   }
 
-  individual.Num_marriages = total_num_marriages;
+  individual.Num_marriages = window.total_num_marriages;
 
-  for (let i = 1; i <= total_num_marriages; i++) { 
+  console.log(window.total_num_marriages)
+
+  for (let i = 1; i <= window.total_num_marriages; i++) { 
     individual.Spouse[i - 1] = $('#Spouse_m' + i).val()[0];
     individual.Children[i - 1] = $('#Children_m' + i).val();
-    individual.Marriage_status[i - 1] = $('#Status_m' + i).val()[0];
+    console.log($('#Status_m' + i).val()[0]);
+    individual.Marriage_Status[i - 1] = $('#Status_m' + i).val()[0];
   }
 
   individual.Extra = document.getElementById('Extra').value;
@@ -449,9 +454,9 @@ function edit_individual(id) {
   populate_fields(id);
 
   document.getElementById('Num_marriages').addEventListener('change', function() {
-    if (this.value < total_num_marriages) del_marriage_drop(this.value, false);
-    if (this.value > total_num_marriages) new_marriage_drop(this.value);
-    total_num_marriages == this.value;
+    if (this.value < window.total_num_marriages) del_marriage_drop(this.value, false);
+    if (this.value > window.total_num_marriages) new_marriage_drop(this.value);
+    window.total_num_marriages = this.value;
     console.log('done')
   })
 

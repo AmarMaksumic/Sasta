@@ -1,5 +1,3 @@
-let total_num_marriages = null;
-
 function load_page() {
   if (localStorage.getItem('view_only') == 'false') {
     if (!login_status()) window.location = 'login.html';
