@@ -1,10 +1,10 @@
 .linage {
   fill: none;
-  stroke: #000;
+  stroke: black;
 }
 .marriage {
   fill: none;
-  stroke: black;
+  stroke: brown;
 }
 .Male {
   background-color: lightblue;
@@ -23,6 +23,18 @@
 .tree_center {
   border-color: green;
   border-width: 3px;
+}
+
+.tree_center.dead {
+  border-color: green red;
+  border-width: 3px;
+
+}
+
+.dead {
+  border-color: red;
+  border-width: 3px;
+
 }
 .none {
   background-color: gray;

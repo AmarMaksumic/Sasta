@@ -43,13 +43,13 @@ function make_tree(id) {
   if (individual.Parent1 != null && individual.Parent1 != null) {
     tree.push({
                 "name": full_name(individuals, individual.Parent1),
-                "class": individuals[individual.Parent1].Gender,
+                "class": individuals[individual.Parent1].Gender + ' ' + is_dead(individuals[individual.Parent1].DOD),
                 "textClass": null,
                 "extra": individual.Parent1,
                 "marriages": [{
                   "spouse": {
                     "name": full_name(individuals, individual.Parent2),
-                    "class": individuals[individual.Parent2].Gender,
+                    "class": individuals[individual.Parent2].Gender + ' ' + is_dead(individuals[individual.Parent2].DOD),
                     "textClass": null,
                     "extra": individual.Parent2
                   },
@@ -59,7 +59,7 @@ function make_tree(id) {
   } else if (individual.Parent1 != null) {
     tree.push({
                 "name": full_name(individuals, individual.Parent1),
-                "class": individuals[individual.Parent1].Gender,
+                "class": individuals[individual.Parent1].Gender + ' ' + is_dead(individuals[individual.Parent1].DOD),
                 "textClass": null,
                 "extra": individual.Parent1,
                 "marriages": [{
@@ -95,7 +95,7 @@ function make_tree(id) {
     for (let i = 0; i < siblings_length; i++) {
       siblings.push({
         "name": full_name(individuals, individual.Siblings[i]),
-        "class": individuals[individual.Siblings[i]].Gender,
+        "class": individuals[individual.Siblings[i]].Gender + ' ' + is_dead(individuals[individual.Siblings[i]].DOD),
         "textClass": null,
         "extra": individual.Siblings[i]
       });
@@ -103,7 +103,7 @@ function make_tree(id) {
 
     siblings.splice(Math.round(siblings_length/2), 0, {
                                                         "name": full_name(individuals, id),
-                                                        "class": individual.Gender + " tree_center",
+                                                        "class": individual.Gender + " tree_center " + is_dead(individual.DOD),
                                                         "textClass": null,
                                                         "extra": id,
                                                         "marriages": []
@@ -118,7 +118,7 @@ function make_tree(id) {
     },
     {
       "name": full_name(individuals, id),
-      "class": individual.Gender + " tree_center",
+      "class": individual.Gender + " tree_center " + is_dead(individual.DOD),
       "textClass": null,
       "extra": id,
       "marriages": []
@@ -136,7 +136,7 @@ function make_tree(id) {
         me.marriages.push({
           "spouse": {
             "name": full_name(individuals, individual.Spouse[i]),
-            "class": individuals[individual.Spouse[i]].Gender,
+            "class": individuals[individual.Spouse[i]].Gender + ' ' + is_dead(individuals[individual.Spouse[i]].DOD),
             "textClass": null,
             "extra": individual.Spouse[i]
           }
@@ -162,7 +162,7 @@ function make_tree(id) {
           for (let j = 0; j < children_length; j++) {
             me.marriages[i].children.push({
                                             "name": full_name(individuals, individual.Children[i][j]),
-                                            "class": individuals[individual.Children[i][j]].Gender,
+                                            "class": individuals[individual.Children[i][j]].Gender + ' ' + is_dead(individuals[individual.Children[i][j]].DOD),
                                             "textClass": null,
                                             "extra": individual.Children[i][j]
                                           })
@@ -218,6 +218,11 @@ function make_tree(id) {
   d3_tree.zoomToNode(parseInt(center[0].id.substr(4)), zoom=2, duartion = 0);
 
   //d3_tree.zoomTo(0, 200, zoom = 2, duration = 500);
+}
+
+function is_dead(DOD) {
+  if (DOD == '') return '';
+  return 'dead'
 }
 
 function full_name(individuals, id) {

@@ -185,7 +185,7 @@ function populate_fields(id) {
     $('#Spouse_m1').val([individuals[id].Spouse[0]]);
     $('#Spouse_m1').trigger('chosen:updated');
 
-    $('#Status_m1').val([individuals[id].Marriage_status[0]]);
+    $('#Status_m1').val([individuals[id].Marriage_Status[0]]);
     $('#Status_m1').trigger('chosen:updated');
 
     document.getElementById('Spouse_m1').disabled = false; 
@@ -203,7 +203,7 @@ function populate_fields(id) {
       $('#Spouse_m' + i).trigger('chosen:updated');
       $('#Children_m' + i).val(individuals[id].Children[i - 1]);
       $('#Children_m' + i).trigger('chosen:updated');
-      $('#Status_m' + i).val([individuals[id].Marriage_status[i - 1]]);
+      $('#Status_m' + i).val([individuals[id].Marriage_Status[i - 1]]);
       $('#Status_m' + i).trigger('chosen:updated');
     }
   }
@@ -375,7 +375,7 @@ function collect_add_data() {
   for (let i = 1; i <= window.total_num_marriages; i++) { 
     individual.Spouse[i - 1] = $('#Spouse_m' + i).val()[0];
     individual.Children[i - 1] = $('#Children_m' + i).val();
-    individual.Marriage_status[i - 1] = $('#Status_m' + i).val()[0];
+    individual.Marriage_Status[i - 1] = $('#Status_m' + i).val()[0];
   }
 
   
