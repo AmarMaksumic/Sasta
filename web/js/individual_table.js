@@ -8,7 +8,7 @@ function render_table (job) {
   tree_table.setAttribute('class', 'individuals_table');
 
   for (id in tree_data.individuals[0]) {
-    add_row(tree_table, tree_data.individuals[0][id].Fname + ' ' + tree_data.individuals[0][id].Lname, tree_data.individuals[0][id].DOB, id, location)
+    add_row(tree_table, tree_data.individuals[0][id].Fname + ' ' + tree_data.individuals[0][id].Mname + ' ' + tree_data.individuals[0][id].Lname, tree_data.individuals[0][id].DOB, id, location)
   }
 
   console.log(tree_table);
