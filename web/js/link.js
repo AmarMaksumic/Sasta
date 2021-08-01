@@ -8,8 +8,8 @@ function get_url_vars() {
 
 function redirect_url() {
   let params = get_url_vars();
-  if (params.gfdd != undefined && params.dodd != undefined) {
-    request_tree_view(params.gfdd, params.dodd);
+  if (params.gfdd != undefined && params.dldd != undefined) {
+    request_tree_view(params.gfdd, params.dldd);
   }
 }
 

@@ -17,11 +17,35 @@ function init_share_modal() {
     modal.style.display = "none";
   }
 
+  document.getElementById('get_shareable_link').onclick = function() {
+    get_shareable_link();
+  }
+
   document.getElementById('close_settings_modal').onclick = function() {
     modal.style.display = "none";
   }
 }
 
-function get_shareable_link() {
-  request_view_link();
+async function get_shareable_link() {
+  uuid_code = await request_view_link();
+
+  link = String(window.location.href).replace('topology', 'link');
+
+  link += '?gfdd=' + localStorage.getItem('current_tree') + '&dldd=' + uuid_code;
+
+  document.getElementById('get_shareable_link').remove();
+  document.getElementById('shareable_link_container').style.display = 'block';
+  document.getElementById('shareable_link').innerHTML = link;
+
+  document.getElementById('shareable_link').onclick = function() {
+    let text = link;
+    console.log(text)
+          navigator.clipboard.writeText(text)
+            .then(() => {
+              alert('Text copied to clipboard');
+            })
+            .catch(err => {
+              alert('Error in copying text: ', err);
+            });
+  }
 }

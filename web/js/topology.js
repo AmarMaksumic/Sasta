@@ -16,9 +16,9 @@ function load_page() {
   init_share_modal();
 
   if(localStorage.getItem('view_only') == 'true') {
-    console.log('hi')
     document.getElementById('sharing_settings').remove();
     document.getElementById('edit_tree').remove();
+    document.getElementById('portal_link').remove();
     document.getElementById('edit_family_tree_title').innerHTML = 'View Family Tree';
 
     for (let i = 0; i < document.getElementsByClassName('not_for_viewer').length; i) {
@@ -40,7 +40,9 @@ function make_tree(id) {
   let individuals = tree_data.individuals[0];
   let individual = individuals[id];
 
-  if (individual.Parent1 != null && individual.Parent1 != null) {
+  console.log(tree_data);
+
+  if (individual.Parent1 != null && individual.Parent2 != null) {
     tree.push({
                 "name": full_name(individuals, individual.Parent1),
                 "class": individuals[individual.Parent1].Gender + ' ' + is_dead(individuals[individual.Parent1].DOD),
@@ -227,6 +229,7 @@ function is_dead(DOD) {
 
 function full_name(individuals, id) {
   let name = '';
+  console.log(id)
   if (individuals[id].Fname != null) {
     name += individuals[id].Fname + ' ';
   }

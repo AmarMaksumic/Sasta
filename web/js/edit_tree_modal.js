@@ -361,7 +361,9 @@ function collect_add_data() {
   individual.Gender = document.getElementById('Gender').value;
   if (individual.Gender == '') individual.Gender = 'none'
   individual.Parent1 = $('#Parents').val()[0];
+  if (individual.Parent2 == undefined) individual.Parent1 = null;
   individual.Parent2 = $('#Parents').val()[1];
+  if (individual.Parent2 == undefined) individual.Parent2 = null;
   individual.Siblings = [];
   for (let i = 0; i < $('#Siblings').val().length; i++) {
     individual.Siblings.push($('#Siblings').val()[i]);
@@ -383,7 +385,7 @@ function collect_add_data() {
 
   console.log(individual)
 
-  return individual;
+  return [individual, document.getElementById('Link_Data').checked];
 }
 
 function send_add_data() {
@@ -405,7 +407,9 @@ function collect_edit_data(id) {
   individual.Gender = document.getElementById('Gender').value;
   if (individual.Gender == '') individual.Gender = 'none'
   individual.Parent1 = $('#Parents').val()[0];
+  if (individual.Parent1 == undefined) individual.Parent1 = null;
   individual.Parent2 = $('#Parents').val()[1];
+  if (individual.Parent2 == undefined) individual.Parent2 = null;
   individual.Siblings = [];
   for (let i = 0; i < $('#Siblings').val().length; i++) {
     individual.Siblings.push($('#Siblings').val()[i]);
@@ -414,6 +418,10 @@ function collect_edit_data(id) {
   individual.Num_marriages = window.total_num_marriages;
 
   console.log(window.total_num_marriages)
+
+  individual.Spouse = [];
+  individual.Children = [];
+  individual.Marriage_Status = [];
 
   for (let i = 1; i <= window.total_num_marriages; i++) { 
     individual.Spouse[i - 1] = $('#Spouse_m' + i).val()[0];
@@ -426,12 +434,17 @@ function collect_edit_data(id) {
 
   console.log(individual)
 
-  return individual;
+  return [individual, document.getElementById('Link_Data').checked];
 }
 
-function send_edit_data(id) {
-  request_edit(id, collect_edit_data(id));
-  request_tree(localStorage.getItem('current_tree'));
+async function send_edit_data(id) {
+  code = await request_edit(id, collect_edit_data(id));
+  if (code != 'complete') {
+    window.alert(code);
+    window.alert('Please reload the page');
+  } else {
+    request_tree(localStorage.getItem('current_tree'));
+  }
 }
 
 function edit_individual(id) {
@@ -443,7 +456,7 @@ function edit_individual(id) {
     document.getElementById('add_individual').style.display = 'none';
     document.getElementById('close_edit_modal').style.display = 'none';
 
-    document.getElementById('submit_edit_individual').onclick = function() {
+    document.getElementById('submit_edit_individual').onclick = async function() {
       send_edit_data(id);
     }
   }
