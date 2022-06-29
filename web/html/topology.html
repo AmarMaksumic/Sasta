@@ -1,0 +1,184 @@
+<link href="css/chosen.css" rel="stylesheet">
+<link href="css/help_tip.css" rel="stylesheet">
+<link href='css/tree.css' rel='stylesheet'>
+
+<div class='section'>
+  <div class='divider'>
+  </div>
+</div>
+
+<div class='section grey shadow' id='topology'>
+  <div class=''>
+    <h2 id='active_tree'>$Tree</h2>
+    <button id='edit_tree'>Edit Family Tree</button>
+    <button id='sharing_settings'>Sharing Settings</button>
+    <div id='family_tree'></div>
+    <div id='edit_switch'>
+      <p>Turn on edit nodes.</p>
+      <label class='switch'>
+        <input type='checkbox' id='can_edit' onclick='toggle_edit_nodes()'>
+        <span class='slider round'></span>
+      </label>
+    </div>
+    <br>
+    <label for='selector'>Selector: </label>
+    <div class='helptip'>?
+      <span class='helptiptext'>Individual Selector</span>
+    </div><br>
+    <select name='selector' id='selector' class='dropsearch' onchange='if(document.getElementById("selector").value != "") make_tree(document.getElementById("selector").value);' multiple></select><br><br>
+  </div>
+</div>
+
+<div class='modal' id='edit_tree_modal'>
+  <div class='modal_content'>
+    <div class='modal_header'>
+      <span class='close'>&times;</span>
+      <p><strong id='edit_family_tree_title'>Edit Family Tree</strong></p>
+    </div>
+    <div class='modal_body'>
+      <div id='search_for_edit'>
+        <input class='reference_point' type='text' name='reference_point' placeholder='Search for a person or date!'>
+        <div class='individual_list'></div>
+      </div>
+      <div id='edit_individual'>
+        <p id='current_individual'></p>
+        <form onsubmit='return false'>
+          <label for='Fname'>First Name: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>First name of individual.</span>
+          </div>
+          <input type='text' name='Fname' id='Fname'>
+          <label for='Mname'>Middle Name: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Middle name of individual.</span>
+          </div>
+          <input type='text' name='Mname' id='Mname'>
+          <label for='Lname'>Last Name: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Last name of individual.</span>
+          </div>
+          <input type='text' name='Lname' id='Lname'>
+          <label for='DOB'>Date of Birth: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>DoB of individual. Not required, but makes searches with same names easier.</span>
+          </div>
+          <input type='date' name='DOB' id='DOB'>
+          <label for='DOD'>Date of Death: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>DoD of individual. Not required; may check box below to mark individual as deceased.</span>
+          </div>
+          <input type='date' name='DOD' id='DOD'>
+          <label for='Gender'>Gender: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Gender of individual at birth.</span>
+          </div><br>
+          <select name='Gender' id='Gender' multiple>
+            <option value='Male'>Male</option>
+            <option value='Female'>Female</option>
+          </select><br><br>
+          <hr style='border-top: 3px dashed #bbb;'>
+          <label for='Link_Data'>Link connections to family members</label>
+          <div class='helptip'>?
+            <div class='helptiptext'>If selected, this will auto-magically link data to members below.<br>I.e. Your sibling's / siblings' information for parent(s) and their sibling(s) (including you, but excluding the present individual) will be filled in for them.</div>
+          </div>
+          <input name='Link_Data' id='Link_Data' type='checkbox'></input>
+          <hr style='border-top: 3px dashed #bbb;'>
+          <label for='Parents'>Parents: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Parent(s) of individual. May select up to two.</span>
+          </div><br>
+          <select name='Parents' id='Parents' class='modaldropsearch' multiple></select><br><br>
+          <label for='Siblings'>Siblings: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Siblings of individual.</span>
+          </div><br>
+          <select name='Siblings' id='Siblings' class='modaldropsearch' multiple></select><br><br>
+          <hr style='border-top: 3px dashed #bbb;'>
+          <label for='Num_marriages'>Number of Marriages: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Number of marriages the individual has had.</span>
+          </div>
+          <input type='number' min='0' name='Num_marriages' id='Num_marriages'>
+          <label for='Spouse_m1'>Spouse for Marriage 1</label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Spouse of individual for selected marriage.</span>
+          </div><br>
+          <select name='Spouse_m1' id='Spouse_m1' class='modaldropsearch' multiple></select><br><br>
+          <label for='Children_m1'>Children for Marriage 1</label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Children of individual for selected marriage.</span>
+          </div><br>
+          <select name='Children_m1' id='Children_m1' class='modaldropsearch' multiple></select><br><br>
+          <label for='Status_m1'>Status for Marriage 1</label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Status of selected marriage. Either married, divorced, or re-married.</span>
+          </div><br>
+          <select name='Status_m1' id='Status_m1' multiple>
+            <option value='1'>Married</option>
+            <option value='2'>Divorced</option>
+            <option value='3'>Re-Married</option>
+          </select><br><br>
+          <div id='extra_m'></div>
+          <label for='Extra'>Extra info: </label>
+          <div class='helptip'>?
+            <span class='helptiptext'>Any extra info for the individual. Biography, links to websites, et cetera.</span>
+          </div>
+          <input type='text' name='Extra' id='Extra'>
+        </form>
+      </div>
+    </div>
+    <div class='modal_footer'>
+      <div class='not_for_viewer'>
+        <button class='add_individual' id='add_individual'>Add person</button>
+        <button class='save' id='submit_edit_individual'>Save edit</button>
+        <button class='delete' id='delete_individual'>Delete</button>
+        <button class='save' id='submit_add_individual'>Save add</button>
+        <button class='cancel' id='cancel_action'>Cancel</button>
+      </div>
+      <button class='close_modal' id='close_edit_modal'>Close</button>
+    </div>
+  </div>
+</div>
+
+<div class='modal' id='sharing_modal'>
+  <div class='modal_content'>
+    <div class='modal_header'>
+      <span class='close'>&times;</span>
+      <p><strong>Sharing Settings</strong></p>
+    </div>
+    <div class='modal_body'>
+      <form onsubmit='return false'>
+        <label for='add_contributor'>Add contributor: </label>
+        <input type='text' name='add_contributor' id='add_contributor'>
+        <label for='add_viewer'>Add viewer: </label>
+        <input type='text' name='add_viewer' id='add_viewer'>
+        <button id='get_shareable_link'>Get shareable viewing link</button>
+        <div id='shareable_link_container' style='display: none;'>
+          <p>Click button to copy:</p>
+          <button id='shareable_link'></button>
+        </div>
+      </form>
+    </div>
+    <div class='modal_footer'>
+      <button class='close_modal' id='close_settings_modal'>Close</button>
+    </div>
+  </div>
+</div>
+
+<script src='js/chart.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/d3@4'></script>
+<!-- <script>
+
+const div = d3.selectAll('div');
+
+</script> -->
+<script src='js/package/lodash.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/d3-dtree@2.4.1/dist/dTree.min.js'></script>
+
+<script src='js/server_updates.js'></script>
+<script src='js/chosen.jquery.js'></script>
+<script src='js/edit_tree_modal.js'></script>
+<script src='js/sharing_modal.js'></script>
+<script src='js/individual_table.js'></script>
+<script src='js/html_elems/topology.js'></script>

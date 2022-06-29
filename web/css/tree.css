@@ -1,25 +1,40 @@
+#family_tree {
+  border-top: 1px solid #f5f7fa;
+  border-bottom: 1px solid #f5f7fa;
+}
+
+foreignObject > div {
+  width: auto !important;
+  height: auto !important;
+  font-size: 15px;
+}
+
 .linage {
   fill: none;
   stroke: black;
 }
+
 .marriage {
   fill: none;
-  stroke: brown;
+  stroke: #800080;
 }
+
 .Male {
-  background-color: lightblue;
+  background-color: #30BCED;
   color:black;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
 }
+
 .Female {
-  background-color: pink;
+  background-color: #F397D6;
   color: black;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
 }
+
 .tree_center {
   border-color: green;
   border-width: 3px;
@@ -36,6 +51,15 @@
   border-width: 3px;
 
 }
+
+.add {
+  background-color: #B79785;
+  color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+}
+
 .none {
   background-color: gray;
   color: white;
@@ -43,14 +67,16 @@
   border-width: 1px;
   border-radius: 5px;
 }
+
 .emphasis{
   font-style: italic;
 }
-p {
-  padding:0;
-  margin:0;
-}
-svg {
+
+/* p {
+  padding: 5px;
+} */
+
+/* svg {
   border-style: solid;
   border-width: 1px;
-}
+} */

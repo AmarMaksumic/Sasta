@@ -1,14 +1,18 @@
+// Main function to render a table of individuals for either:
+//   - Launching a search modal.
+//   - Launching an edit modal.
 function render_table (job) {
   let location = null;
-  if (job == 'SEARCH') location = 0;
-  if (job == 'EDIT') location = 1;
+  if (job == 'EDIT') location = 0;
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
+  console.log(tree_data.individuals)
 
   let tree_table = document.createElement('TABLE');
   tree_table.setAttribute('class', 'individuals_table');
 
   for (id in tree_data.individuals[0]) {
-    add_row(tree_table, tree_data.individuals[0][id].Fname + ' ' + tree_data.individuals[0][id].Mname + ' ' + tree_data.individuals[0][id].Lname, tree_data.individuals[0][id].DOB, id, location)
+    add_row(tree_table, full_name(tree_data.individuals[0][id]), 
+            tree_data.individuals[0][id].DOB, id, location);
   }
 
   console.log(tree_table);
@@ -16,6 +20,7 @@ function render_table (job) {
   document.getElementsByClassName('individual_list')[location].appendChild(tree_table);
 }
 
+// Helper function to create a cell in a row of data.
 function add_cell(tr, value) {
   let td = document.createElement('td');
   
@@ -26,6 +31,7 @@ function add_cell(tr, value) {
   delete td;
 }
 
+// Helper function to create a row in a table of data.
 function add_row(table, name, dob, id, location) {
   let tr = document.createElement('tr');
 

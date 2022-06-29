@@ -1,0 +1,110 @@
+.topnav {
+  overflow: hidden;
+  background-color: #d9d9d9;
+  width: 65%; 
+  top: 2vh;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  border-radius: 10px;
+  position: fixed;
+  z-index: 10;
+  box-shadow: 5px 10px 18px #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #111;
+  text-align: center;
+  padding: 16px 24px;
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 20px;
+  background: linear-gradient(to right, #F397D6, #F397D6 50%, #111 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 375ms ease;
+}
+
+.topnav a:hover {
+  background-position: 0 100%;
+}
+
+.topnav a.active {
+  float: left;
+  display: block;
+  color: #30BCED;
+  text-align: center;
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 20px;
+  background: linear-gradient(to right, #F397D6, #F397D6 50%, #30BCED 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 375ms ease;
+}
+
+.topnav a:hover.active {
+  background-position: 0 100%;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+/* The progress container (grey background) */
+.progress-container {
+  height: 8px;
+  z-index: 10;
+  position: fixed;
+  width: 65%; 
+  top: 2vh;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+/* The progress bar (scroll indicator) */
+.progress-bar {
+  height: 8px;
+  background: #30BCED;
+  width: 0%;
+  border-radius: 10px 10px 0px 0px;
+}
+
+@media screen and (max-width: 1000px) {
+  .topnav {width: 90%}
+  .progress-container {width: 90%}
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  /* .topnav.responsive {position: relative;} */
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive a .right {
+    left: 0;
+    right: auto !important;
+  }
+}

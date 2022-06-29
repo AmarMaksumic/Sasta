@@ -71,7 +71,7 @@ function populate_dropdowns(id) {
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
   let individuals = tree_data.individuals[0];
 
-  let search_drops = document.getElementsByClassName('dropsearch');
+  let search_drops = document.getElementsByClassName('modaldropsearch');
 
   for (let i = 0; i < search_drops.length; i++) {
     search_drops[i].innerHTML = '';
@@ -83,16 +83,13 @@ function populate_dropdowns(id) {
       let item = document.createElement('OPTION');
       item.setAttribute('name', person);
       item.setAttribute('value', person);
-      item.innerHTML = full_name(individuals, person)
+      item.innerHTML = full_name(individuals[person])
       for (let i = 0; i < search_drops.length; i++) {
         let clone = item.cloneNode(true);
         search_drops[i].append(clone);
       }
     }
   }
-
-  console.log(search_drops);
-  
 
   $('#Gender').chosen({
     no_results_text: "Oops, nothing found!",
@@ -136,7 +133,7 @@ function populate_fields(id) {
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
   let individuals = tree_data.individuals[0];
 
-  document.getElementById('current_individual').innerHTML = full_name(individuals, id);
+  document.getElementById('current_individual').innerHTML = full_name(individuals[id]);
 
   document.getElementById('Fname').value = individuals[id].Fname;
   document.getElementById('Mname').value = individuals[id].Mname;
@@ -209,9 +206,86 @@ function populate_fields(id) {
   }
 }
 
+function populate_fields_with_code(code) {
+  
+  let params = code.split(' ');
+  let parent1 = null;
+  let parent2 = null;
+  let siblings = [];
+  let spouse = null;
+  let children = [];
+  for (param in params) {
+    let str = params[param];
+    if (str.indexOf('po') != -1) {
+      parent1 = parseInt(str.split('po')[1]);
+    } else if (params[param].indexOf('pt') != -1) {
+      parent2 = parseInt(str.split('pt')[1]);
+    } else if (params[param].indexOf('sib') != -1) {
+      siblings.push( parseInt(str.split('sib')[1]) );
+    } else if (params[param].indexOf('sp') != -1) {
+      spouse = parseInt(str.split('sp')[1]);
+    } else if (params[param].indexOf('c') != -1) {
+      children.push( parseInt(str.split('c')[1]) );
+    }
+  }
+
+  console.log(parent1);
+  console.log(parent2);
+  console.log(siblings);
+  console.log(spouse);
+  console.log(children);
+
+  $('#Parents').val([parent1, parent2]);
+  $('#Parents').trigger('chosen:updated');
+
+  $('#Siblings').val(siblings);
+  $('#Siblings').trigger('chosen:updated');
+
+  // document.getElementById('Num_marriages').value = individuals[id].Num_marriages;
+
+  if (spouse == null && children.length == 0) {
+    console.log('eeee');
+    document.getElementById('Num_marriages').value = 0;
+    
+    $('#Children_m1').val([]);
+    $('#Children_m1').trigger('chosen:updated');
+
+    
+    $('#Spouse_m1').val([]);
+    $('#Spouse_m1').trigger('chosen:updated');
+
+    $('#Status_m1').val([]);
+    $('#Status_m1').trigger('chosen:updated');
+
+    window.total_num_marriages = 0;
+
+    document.getElementById('Spouse_m1').disabled = true; 
+    $('#Spouse_m1').prop('disabled', true).trigger("chosen:updated");
+    document.getElementById('Status_m1').disabled = true; 
+    $('#Status_m1').prop('disabled', true).trigger("chosen:updated");
+  } else {
+    console.log('ffff');
+    document.getElementById('Num_marriages').value = 1;
+    $('#Children_m1').val(children);
+    $('#Children_m1').trigger('chosen:updated');
+
+    $('#Spouse_m1').val([spouse]);
+    $('#Spouse_m1').trigger('chosen:updated');
+
+    $('#Status_m1').val([]);
+    $('#Status_m1').trigger('chosen:updated');
+
+    document.getElementById('Spouse_m1').disabled = false; 
+    $('#Spouse_m1').prop('disabled', false).trigger("chosen:updated");
+    document.getElementById('Status_m1').disabled = false; 
+    $('#Status_m1').prop('disabled', false).trigger("chosen:updated");
+    window.total_num_marriages = 1;
+  }
+}
+
 function init_marriage_drop(num) {
 
-  let search_drops = document.getElementById('m' + num).getElementsByClassName('dropsearch');
+  let search_drops = document.getElementById('m' + num).getElementsByClassName('modaldropsearch');
   let tree_data = JSON.parse(localStorage.getItem('current_tree_data'));
   let individuals = tree_data.individuals[0];
 
@@ -225,7 +299,7 @@ function init_marriage_drop(num) {
       let item = document.createElement('OPTION');
       item.setAttribute('name', person);
       item.setAttribute('value', person);
-      item.innerHTML = full_name(individuals, person)
+      item.innerHTML = full_name(individuals[person])
       for (let i = 0; i < search_drops.length; i++) {
         let clone = item.cloneNode(true);
         search_drops[i].append(clone);
@@ -271,9 +345,9 @@ function new_marriage_drop(new_num) {
       let marriage = `  <div id=m` + i + `>
                           <hr style="border-top: 1px dashed #bbb;">
                           <label for="Spouse_m` + i + `">Spouse for Marriage ` + i + `</label><br>
-                          <select name="Spouse_m` + i + `" id="Spouse_m` + i + `" class="dropsearch" multiple></select><br><br>
+                          <select name="Spouse_m` + i + `" id="Spouse_m` + i + `" class="modaldropsearch" multiple></select><br><br>
                           <label for="Children_m` + i + `">Children for Marriage ` + i + `</label><br>
-                          <select name="Children_m` + i + `" id="Children_m` + i + `" class="dropsearch" multiple></select><br><br>
+                          <select name="Children_m` + i + `" id="Children_m` + i + `" class="modaldropsearch" multiple></select><br><br>
                           <label for="Status_m` + i + `">Status for Marriage ` + i + `</label><br>
                           <select name="Status_m` + i + `" id="Status_m` + i + `" multiple>
                             <option value="1">Married</option>
@@ -296,9 +370,9 @@ function new_marriage_drop(new_num) {
       let marriage = `  <div id=m` + i + `>
                           <hr style="border-top: 1px dashed #bbb;">
                           <label for="Spouse_m` + i + `">Spouse for Marriage ` + i + `</label><br>
-                          <select name="Spouse_m` + i + `" id="Spouse_m` + i + `" class="dropsearch" multiple></select><br><br>
+                          <select name="Spouse_m` + i + `" id="Spouse_m` + i + `" class="modaldropsearch" multiple></select><br><br>
                           <label for="Children_m` + i + `">Children for Marriage ` + i + `</label><br>
-                          <select name="Children_m` + i + `" id="Children_m` + i + `" class="dropsearch" multiple></select><br><br>
+                          <select name="Children_m` + i + `" id="Children_m` + i + `" class="modaldropsearch" multiple></select><br><br>
                           <label for="Status_m` + i + `">Status for Marriage ` + i + `</label><br>
                           <select name="Status_m` + i + `" id="Status_m` + i + `" multiple>
                             <option value="1">Married</option>
@@ -455,6 +529,12 @@ function edit_individual(id) {
     document.getElementById('submit_add_individual').style.display = 'none';
     document.getElementById('add_individual').style.display = 'none';
     document.getElementById('close_edit_modal').style.display = 'none';
+
+    if (id == -1) {
+      document.getElementById('submit_add_individual').onclick = async function() {
+        send_add_data();
+      }
+    }
 
     document.getElementById('submit_edit_individual').onclick = async function() {
       send_edit_data(id);
